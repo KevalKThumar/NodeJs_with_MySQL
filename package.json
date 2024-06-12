@@ -4,7 +4,8 @@
   "description": "this repo is for learnig nodejs with MySQL data base and deploy it",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -19,5 +20,13 @@
   "bugs": {
     "url": "https://github.com/KevalKThumar/NodeJs_with_MySQL/issues"
   },
-  "homepage": "https://github.com/KevalKThumar/NodeJs_with_MySQL#readme"
+  "homepage": "https://github.com/KevalKThumar/NodeJs_with_MySQL#readme",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mysql2": "^3.10.0",
+    "sequelize": "^6.37.3"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
+  }
 }
