@@ -1,0 +1,23 @@
+{
+  "name": "nodewithmysql",
+  "version": "1.0.0",
+  "description": "this repo is for learnig nodejs with MySQL data base and deploy it",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KevalKThumar/NodeJs_with_MySQL.git"
+  },
+  "keywords": [
+    "Nodejs",
+    "MySql"
+  ],
+  "author": "KevalKThumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KevalKThumar/NodeJs_with_MySQL/issues"
+  },
+  "homepage": "https://github.com/KevalKThumar/NodeJs_with_MySQL#readme"
+}
