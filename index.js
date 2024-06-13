@@ -1,11 +1,14 @@
 const express = require('express');
 const postRouter = require('./route/post.route');
+const bodyParser = require('body-parser');
+
 
 const app = express();
 
 app.use(express.json());
 
-app.use('/posts', postRouter)
+app.use('/posts', postRouter);
+app.use(bodyParser.json());
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
