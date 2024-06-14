@@ -1,5 +1,8 @@
 
 const models = require('../models')
+const Validator =  require('fastest-validator');
+
+
 
 const deletePost = (req, res) => {
     const id = req.params.id;
@@ -37,6 +40,37 @@ const update = (req, res) => {
         catagoryId: req.body.catagoryId,
     }
     const userId = 1;
+    const schema = {
+        title: {
+            type: "string",
+            max: "255",
+            min: "3",
+            trim: true,
+            optional: false,
+        },
+        content: {
+            type: "string",
+            max: "500",
+            optional: false,
+        },
+        imageUrl: {
+            type: "url",
+        },
+        catagoryId: {
+            type: "number",
+            optional: false,
+        },
+    }
+
+    const validator = new Validator();
+    const validationResponse = validator.validate(updatedPost, schema);
+    if (validationResponse !== true) {
+        return res.status(400).json({
+            message: "validation failed",
+            errors: validationResponse
+        })
+    }
+
 
     models.Post.update(updatedPost, {
         where: {
@@ -84,6 +118,37 @@ const save = (req, res) => {
         imageUrl: req.body.imageUrl,
         catagoryId: req.body.catagoryId,
         userId: 1
+    }
+
+    const schema = {
+        title:{
+            type: "string",
+            max: "255",
+            min: "3",
+            trim: true,
+            optional:false,
+        },
+        content:{
+            type: "string",
+            max: "500",
+            optional:false,
+        },
+        imageUrl:{
+            type: "url",
+        },
+        catagoryId:{
+            type: "number",
+            optional:false,
+        },
+    }
+
+    const validator = new Validator();
+    const validationResponse = validator.validate(post, schema);
+    if (validationResponse !== true) {
+        return res.status(400).json({
+            message: "validation failed",
+            errors: validationResponse
+        })
     }
 
     models.Post.create(post).then((result) => {

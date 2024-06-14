@@ -22,8 +22,11 @@
   },
   "homepage": "https://github.com/KevalKThumar/NodeJs_with_MySQL#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
+    "fastest-validator": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
     "mysql2": "^3.10.0",
     "sequelize": "^6.37.3"
   },
