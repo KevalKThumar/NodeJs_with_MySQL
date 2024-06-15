@@ -128,20 +128,20 @@ const login = (req, res) => {
         })
     }
     models.User.findOne({ where: { email: req.body.email } })
-        .then(result => {
-            if (!result) {
+        .then(user => {
+            if (!user) {
                 return res.status(404).json({
                     message: "user not found"
                 })
             }
             else{
-                bcryptjs.compare(req.body.password, result.password, (err, result) => {
+                bcryptjs.compare(req.body.password, user.password, (err, result) => {
                     if (result) {
                         const token = jwt.sign({
-                            email: result.email,
-                            userId: result.id
+                            email: user.email,
+                            userId: user.id
                         },
-                            'secretkey',
+                            process.env.JWT_SECRET,
                             (err, token) => {
                                 res.status(200).json({
                                     message: "user logged in successfully",

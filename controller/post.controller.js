@@ -39,7 +39,7 @@ const update = (req, res) => {
         imageUrl: req.body.imageUrl,
         catagoryId: req.body.catagoryId,
     }
-    const userId = 1;
+    const userId = req.userData.userId;
     const schema = {
         title: {
             type: "string",
@@ -71,23 +71,40 @@ const update = (req, res) => {
         })
     }
 
+    models.Catagory.findByPk(req.body.catagoryId).then((result) => {
 
-    models.Post.update(updatedPost, {
-        where: {
-            id: id, // column name: value
-            userId: userId
+        if (result !== null) {
+            models.Post.update(updatedPost, {
+                where: {
+                    id: id, // column name: value
+                    userId: userId
+                }
+            }).then((result) => {
+                res.status(200).json({
+                    message: result == 0 ? "post not found" : "post updated successfully",
+                    post: result == 0 ? null : updatedPost
+                })
+            }).catch((err) => {
+                res.status(500).json({
+                    message: "oops! failed to update post",
+                    error: err
+                })
+            });
         }
-    }).then((result) => {
-        res.status(200).json({
-            message: result == 0 ? "post not found" : "post updated successfully",
-            post: result == 0 ? null : updatedPost
-        })
+        else {
+            res.status(404).json({
+                message: "catagory not found"
+            })
+        }
     }).catch((err) => {
         res.status(500).json({
             message: "oops! failed to update post",
             error: err
         })
     });
+
+
+
 
 }
 
@@ -117,8 +134,10 @@ const save = (req, res) => {
         content: req.body.content,
         imageUrl: req.body.imageUrl,
         catagoryId: req.body.catagoryId,
-        userId: 1
+        userId: req.userData.userId
     }
+
+    console.log(req.userData)
 
     const schema = {
         title:{
@@ -150,18 +169,32 @@ const save = (req, res) => {
             errors: validationResponse
         })
     }
-
-    models.Post.create(post).then((result) => {
-        res.status(201).json({
-            message: "post created successfully",
-            post: result
-        })
+    models.Catagory.findByPk(req.body.catagoryId).then((result) => {
+        if (result !== null) {
+            models.Post.create(post).then((result) => {
+                res.status(201).json({
+                    message: "post created successfully",
+                    post: result
+                })
+            }).catch((err) => {
+                res.status(500).json({
+                    message: "oops! failed to create post",
+                    error: err
+                })
+            });
+        }
+        else {
+            res.status(404).json({
+                message: "catagory not found"
+            })
+        }
     }).catch((err) => {
         res.status(500).json({
             message: "oops! failed to create post",
             error: err
         })
     });
+
 
 }
 

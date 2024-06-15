@@ -3,6 +3,10 @@ const postRouter = require('./route/post.route');
 const bodyParser = require('body-parser');
 const userRouter = require('./route/user.route');
 const imageRouter = require('./route/image.route');
+const dotenv = require('dotenv');
+
+
+dotenv.config('./.env');
 
 
 const app = express();
