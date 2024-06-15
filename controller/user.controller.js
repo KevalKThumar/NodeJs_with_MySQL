@@ -134,25 +134,29 @@ const login = (req, res) => {
                     message: "user not found"
                 })
             }
-            bcryptjs.compare(req.body.password, result.password, (err, isMatch) => {
-                if (err) {
-                    return res.status(500).json({
-                        message: "oops! failed to login user",
-                        error: err
-                    })
-                }
-                if (!isMatch) {
-                    return res.status(401).json({
-                        message: "invalid credentials"
-                    })
-                }
-                const token = jwt.sign({ id: result.id }, process.env.JWT_SECRET, { expiresIn: '1d' })
-
-                res.status(200).json({  
-                    message: "user logged in successfully",
-                    token: token
+            else{
+                bcryptjs.compare(req.body.password, result.password, (err, result) => {
+                    if (result) {
+                        const token = jwt.sign({
+                            email: result.email,
+                            userId: result.id
+                        },
+                            'secret',
+                            (err, token) => {
+                                res.status(200).json({
+                                    message: "user logged in successfully",
+                                    token
+                                })
+                            }
+                        )
+                    }
+                    else {
+                        return res.status(401).json({
+                            message: "invalid credentials"
+                        })
+                    }
                 })
-            })
+            }
         })
         .catch(err => {
             return res.status(500).json({
@@ -163,6 +167,7 @@ const login = (req, res) => {
 }
 
 module.exports = {
-    signUp
+    signUp,
+    login
 }
 
