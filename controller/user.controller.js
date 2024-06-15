@@ -141,7 +141,7 @@ const login = (req, res) => {
                             email: result.email,
                             userId: result.id
                         },
-                            'secret',
+                            'secretkey',
                             (err, token) => {
                                 res.status(200).json({
                                     message: "user logged in successfully",
