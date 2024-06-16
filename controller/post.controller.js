@@ -201,7 +201,9 @@ const save = (req, res) => {
 const show = (req, res) => {
     const id = req.params.id;
     // find by primary key
-    models.Post.findByPk(id).then((result) => {
+    models.Post.findByPk(id,{
+        include: [models.Catagory,models.User]
+    }).then((result) => {
         if (!result) {
             res.status(404).json({
                 message: "post not found",
